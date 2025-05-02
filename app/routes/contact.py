@@ -1,7 +1,6 @@
 # app/routes/contact.py
 from flask import Blueprint, request, jsonify, current_app
 from flask_mail import Message
-from app.utils.crypto import decrypt_data
 
 contact = Blueprint('contact', __name__)
 
