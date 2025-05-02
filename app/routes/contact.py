@@ -1,6 +1,6 @@
-from flask import Blueprint, request, jsonify
+# app/routes/contact.py
+from flask import Blueprint, request, jsonify, current_app
 from flask_mail import Message
-from app.utils import mail
 from app.utils.crypto import decrypt_data
 
 contact = Blueprint('contact', __name__)
@@ -10,12 +10,15 @@ def handle_contact():
     try:
         data = request.json.get("data")
         print("Encrypted data:", data)
+
         if not data:
             return jsonify({"error": "Missing data"}), 400
 
+        from app import mail  # Moved inside the route to avoid circular import
+
         msg = Message(
             subject=f"New Contact from {data['name']}",
-            recipients=["junitcp21@gmail.com"], 
+            recipients=["junitcp21@gmail.com"],
             body=f"""
                 New contact submission:
 
