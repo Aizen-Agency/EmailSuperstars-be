@@ -1,4 +1,5 @@
 # app/routes/contact.py
+import os
 from flask import Blueprint, request, jsonify, current_app
 from flask_mail import Message
 
@@ -17,7 +18,7 @@ def handle_contact():
 
         msg = Message(
             subject=f"New Contact from {data['name']}",
-            recipients=["junitcp21@gmail.com"],
+            recipients=[os.getenv("RECEIVER_MAIL")],
             body=f"""
                 New contact submission:
 
